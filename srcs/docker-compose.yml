@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: alpine:3.15
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: dbname
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
