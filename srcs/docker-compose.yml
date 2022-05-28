@@ -1,12 +1,37 @@
 version: '3.8'
 
-networks:
-  inception:
-
 services:
   mariadb:
-    container_name: mariadb
-    build: ./mariadb
+    container_name: ${MYSQL_SERVER}
+    build:
+      context: ./mariadb
+      args:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    hostname: ${MYSQL_SERVER}
     restart: unless-stopped
-    networks:
-      - inception
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./wordpress
+      args:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_SERVER=${MYSQL_SERVER}
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_SERVER=${MYSQL_SERVER}
+    depends_on:
+      - mariadb
