@@ -17,13 +17,13 @@ ENV MYSQL_SERVER=$MYSQL_SERVER
 
 WORKDIR /var/www
 
-COPY wordpress-6.0.tar.gz .
-COPY wp-cli.phar .
-COPY ./setup.sh .
+COPY ./tools/wordpress-6.0.tar.gz .
+COPY ./tools/wp-cli.phar .
+COPY ./tools/setup.sh .
 
-RUN sh setup.sh && rm setup.sh
+RUN sh setup.sh
 
-COPY ./wp-config.php html/.
+COPY ./conf/wp-config.php html/.
 
 EXPOSE 9000
 

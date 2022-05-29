@@ -16,3 +16,5 @@ sed -i "s/MYSQL_ROOT_PASSWORD/$MYSQL_ROOT_PASSWORD/g" ./setup_db.sql
 # Setup database
 service mysql start && mysql -u root < setup_db.sql
 rm setup_db.sql
+
+rm setup.sh

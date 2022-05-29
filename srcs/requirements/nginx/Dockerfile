@@ -6,9 +6,9 @@ RUN apt update && apt upgrade -y && apt install -y \
 
 WORKDIR /tmp
 
-COPY ./setup.sh .
+COPY ./tools/setup.sh .
 
-RUN sh setup.sh && rm setup.sh
+RUN sh setup.sh
 
 EXPOSE 443
 

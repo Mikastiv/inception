@@ -4,7 +4,7 @@ services:
   mariadb:
     container_name: ${MYSQL_SERVER}
     build:
-      context: ./mariadb
+      context: ./requirements/mariadb
       args:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -20,11 +20,13 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - volume-mariadb:${MYSQL_DATADIR}
+    networks:
+      - inception
 
   wordpress:
     container_name: wordpress
     build:
-      context: ./wordpress
+      context: ./requirements/wordpress
       args:
         - MYSQL_DATABASE=${MYSQL_DATABASE}
         - MYSQL_USER=${MYSQL_USER}
@@ -38,20 +40,28 @@ services:
       - MYSQL_SERVER=${MYSQL_SERVER}
     volumes:
       - volume-wordpress:/var/www/html
+    networks:
+      - inception
     depends_on:
       - mariadb
 
   nginx:
     container_name: nginx
     build:
-      context: ./nginx
+      context: ./requirements/nginx
     ports:
       - 443:443
     restart: unless-stopped
     volumes:
       - volume-wordpress:/var/www/html
+    networks:
+      - inception
     depends_on:
       - wordpress
+
+networks:
+  inception:
+    driver: bridge
 
 volumes:
   volume-mariadb:

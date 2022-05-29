@@ -18,11 +18,11 @@ ENV MYSQL_DATADIR=$MYSQL_DATADIR
 
 WORKDIR /tmp
 
-COPY ./setup.sh .
-COPY ./setup_db.sql .
+COPY ./tools/setup.sh .
+COPY ./conf/setup_db.sql .
 
 EXPOSE 3306
 
-RUN sh setup.sh && rm setup.sh
+RUN sh setup.sh
 
 ENTRYPOINT [ "mysqld" ]

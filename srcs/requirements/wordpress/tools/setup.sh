@@ -12,3 +12,5 @@ mv wordpress html
 # Config php
 mkdir -p /run/php
 sed -i '/listen = \/run\/php\/php7.3-fpm.sock/c listen = 9000' /etc/php/7.3/fpm/pool.d/www.conf
+
+rm setup.sh
