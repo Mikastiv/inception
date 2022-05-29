@@ -1,5 +1,15 @@
-FROM alpine:3.15
+FROM debian:buster
 
-RUN apk update && apk upgrade && apk install --no-cache \
+RUN apt update && apt upgrade -y && apt install -y \
     nginx \
     openssl
+
+WORKDIR /tmp
+
+COPY ./setup.sh .
+
+RUN sh setup.sh && rm setup.sh
+
+EXPOSE 443
+
+ENTRYPOINT [ "tail", "-f" ]

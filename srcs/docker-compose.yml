@@ -10,6 +10,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATADIR=${MYSQL_DATADIR}
     hostname: ${MYSQL_SERVER}
     restart: unless-stopped
     environment:
@@ -17,6 +18,8 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - volume-mariadb:${MYSQL_DATADIR}
 
   wordpress:
     container_name: wordpress
@@ -33,5 +36,25 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_SERVER=${MYSQL_SERVER}
+    volumes:
+      - volume-wordpress:/var/www/html
     depends_on:
       - mariadb
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+    ports:
+      - 443:443
+    restart: unless-stopped
+    volumes:
+      - volume-wordpress:/var/www/html
+    depends_on:
+      - wordpress
+
+volumes:
+  volume-mariadb:
+    driver: local
+  volume-wordpress:
+    driver: local

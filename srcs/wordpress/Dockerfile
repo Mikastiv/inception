@@ -34,6 +34,5 @@ CMD ./wp-cli core install --allow-root \
     --admin_email="mleblanc@student.42quebec.com" \
     --path="/var/www/html/" \
     --url="localhost" \
-    && rm ./wp-cli
-
-ENTRYPOINT ["php-fpm7.3", "-F", "-R"]
+    && rm wp-cli \
+    && php-fpm7.3 -F -R
