@@ -2,7 +2,8 @@ FROM debian:buster
 
 RUN apt update && apt upgrade -y && apt install -y \
     nginx \
-    openssl
+    openssl \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
 

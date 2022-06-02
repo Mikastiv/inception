@@ -1,38 +1,20 @@
 FROM debian:buster
 
 RUN apt update && apt upgrade -y && apt install -y php-fpm \
-    php-mysql
+    php-mysql \
+    mariadb-client \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /var/www
+RUN mkdir -p /var/www /run/php
 
-ARG MYSQL_DATABASE
-ARG MYSQL_USER
-ARG MYSQL_PASSWORD
-ARG MYSQL_SERVER
+WORKDIR /var/www/
 
-ENV MYSQL_DATABASE=$MYSQL_DATABASE
-ENV MYSQL_USER=$MYSQL_USER
-ENV MYSQL_PASSWORD=$MYSQL_PASSWORD
-ENV MYSQL_SERVER=$MYSQL_SERVER
+COPY ./tools/* .
 
-WORKDIR /var/www
-
-COPY ./tools/wordpress-6.0.tar.gz .
-COPY ./tools/wp-cli.phar .
-COPY ./tools/setup.sh .
-
-RUN sh setup.sh
-
-COPY ./conf/wp-config.php html/.
+RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp
 
 EXPOSE 9000
 
-CMD ./wp-cli core install --allow-root \
-    --title="Wordpress" \
-    --admin_name="${MYSQL_USER}" \
-    --admin_password="${MYSQL_PASSWORD}" \
-    --admin_email="mleblanc@student.42quebec.com" \
-    --path="/var/www/html/" \
-    --url="localhost" \
-    && rm wp-cli \
-    && php-fpm7.3 -F -R
+ENTRYPOINT [ "./entry.sh" ]
+
+CMD ["php-fpm7.3", "-F", "-R"]

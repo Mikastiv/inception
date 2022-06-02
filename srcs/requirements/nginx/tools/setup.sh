@@ -1,5 +1,3 @@
-#!/bin/sh
+#!/bin/bash
 
 mkdir /etc/nginx/ssl
-
-rm setup.sh

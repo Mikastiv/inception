@@ -2,27 +2,15 @@ FROM debian:buster
 
 RUN apt update && apt upgrade -y && apt install -y \
     mariadb-server \
-    mariadb-client
-
-ARG MYSQL_DATABASE
-ARG MYSQL_ROOT_PASSWORD
-ARG MYSQL_USER
-ARG MYSQL_PASSWORD
-ARG MYSQL_DATADIR
-
-ENV MYSQL_DATABASE=$MYSQL_DATABASE
-ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-ENV MYSQL_USER=$MYSQL_USER
-ENV MYSQL_PASSWORD=$MYSQL_PASSWORD
-ENV MYSQL_DATADIR=$MYSQL_DATADIR
+    mariadb-client \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
 
-COPY ./tools/setup.sh .
-COPY ./conf/setup_db.sql .
+COPY ./tools/entry.sh .
 
 EXPOSE 3306
 
-RUN sh setup.sh
+ENTRYPOINT [ "./entry.sh" ]
 
-ENTRYPOINT [ "mysqld" ]
+CMD ["mysqld"]
