@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# SELECT ID,user_login,meta_key,meta_value FROM wp_users AS wpu INNER JOIN wp_usermeta AS wpm ON wpm.user_id=wpu.ID WHERE wpm.meta_key='wp_capabilities' GROUP BY wpm.meta_value;
+
 if [ "$1" = "php-fpm7.3" ]; then
 
     for i in {0..30}; do
@@ -34,9 +36,15 @@ if [ "$1" = "php-fpm7.3" ]; then
             --title="Wordpress" \
             --admin_name="${MYSQL_USER}" \
             --admin_password="${MYSQL_PASSWORD}" \
-            --admin_email="mleblanc@student.42quebec.com" \
+            --admin_email="${MYSQL_EMAIL}" \
             --skip-email \
             --url="${DOMAIN_NAME}" \
+            --path="/var/www/html"
+        wp user create --allow-root \
+            $WP_USER \
+            $WP_EMAIL \
+            --role=author \
+            --user_pass=$WP_PWD \
             --path="/var/www/html"
     fi
 fi

@@ -5,7 +5,7 @@ services:
     container_name: ${MYSQL_SERVER}
     build: ./requirements/mariadb
     hostname: ${MYSQL_SERVER}
-    restart: unless-stopped
+    restart: always
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -20,13 +20,17 @@ services:
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
-    restart: unless-stopped
+    restart: always
     environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_EMAIL=${MYSQL_EMAIL}
       - MYSQL_SERVER=${MYSQL_SERVER}
-      - DOMAIN_NAME=${DOMAIN_NAME}
+      - WP_USER=${WP_USER}
+      - WP_PWD=${WP_PWD}
+      - WP_EMAIL=${WP_EMAIL}
     volumes:
       - volume-wordpress:/var/www/html
     networks:
@@ -40,7 +44,7 @@ services:
       context: ./requirements/nginx
     ports:
       - 443:443
-    restart: unless-stopped
+    restart: always
     volumes:
       - volume-wordpress:/var/www/html
     networks:
