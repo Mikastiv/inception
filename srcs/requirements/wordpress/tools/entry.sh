@@ -47,7 +47,8 @@ if [ "$1" = "php-fpm7.3" ]; then
             --user_pass=$WP_PWD \
             --path="/var/www/html"
     fi
+
+    echo "Wordpress listening on port 9000"
 fi
 
-echo "Wordpress listening on port 9000"
 exec "$@"

@@ -7,10 +7,10 @@ RUN apt update && apt upgrade -y && apt install -y \
 
 WORKDIR /tmp
 
-COPY ./tools/setup.sh .
-
-RUN sh setup.sh
+COPY ./tools/entry.sh .
 
 EXPOSE 443
 
-ENTRYPOINT [ "tail", "-f" ]
+ENTRYPOINT [ "./entry.sh" ]
+
+CMD ["nginx", "-g", "daemon off;"]

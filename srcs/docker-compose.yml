@@ -45,6 +45,10 @@ services:
     ports:
       - 443:443
     restart: always
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - CERT_CRT=${CERT_CRT}
+      - CERT_KEY=${CERT_KEY}
     volumes:
       - volume-wordpress:/var/www/html
     networks:

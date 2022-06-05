@@ -42,7 +42,8 @@ EOF
         fi
         mariadb -u root -proot < "$MYSQL_DATADIR/initdb.sql" && killall mysqld
     fi
+
+    echo "MariaDB listening on port 3306"
 fi
 
-echo "MariaDB listening on port 3306"
 exec "$@"
