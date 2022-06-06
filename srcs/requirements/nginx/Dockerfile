@@ -7,7 +7,17 @@ RUN apt update && apt upgrade -y && apt install -y \
 
 WORKDIR /tmp
 
-COPY ./tools/entry.sh .
+COPY ./tools/* .
+
+ARG DOMAIN_NAME
+ARG CERT_CRT
+ARG CERT_KEY
+
+ENV DOMAIN_NAME=$DOMAIN_NAME
+ENV CERT_CRT=$CERT_CRT
+ENV CERT_KEY=$CERT_KEY
+
+RUN ./generate_cert.sh
 
 EXPOSE 443
 
