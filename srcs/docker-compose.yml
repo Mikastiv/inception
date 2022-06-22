@@ -69,5 +69,13 @@ networks:
 volumes:
   volume-mariadb:
     driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${VOLUME_PATH}/mariadb
   volume-wordpress:
     driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${VOLUME_PATH}/wordpress
