@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -exuo pipefail
+
 if [ "$1" = 'mysqld' ]; then
     if [ ! -d "/run/mysqld" ]; then
         mkdir -p /run/mysqld

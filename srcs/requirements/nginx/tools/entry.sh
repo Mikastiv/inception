@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -exuo pipefail
+
 if [ "$1" = "nginx" ]; then
     echo "NGINX started"
 

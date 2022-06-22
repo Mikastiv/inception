@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -exuo pipefail
+
 # SELECT ID,user_login,meta_key,meta_value FROM wp_users AS wpu INNER JOIN wp_usermeta AS wpm ON wpm.user_id=wpu.ID WHERE wpm.meta_key='wp_capabilities' GROUP BY wpm.meta_value;
 
 if [ "$1" = "php-fpm7.3" ]; then

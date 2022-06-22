@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -exuo pipefail
+
 mkdir /etc/nginx/ssl
 
 cd /etc/nginx/ssl
