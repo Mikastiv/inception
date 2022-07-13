@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -exuo pipefail
+set -euo pipefail
 
 if [ "$1" = 'mysqld' ]; then
     if [ ! -d "/run/mysqld" ]; then

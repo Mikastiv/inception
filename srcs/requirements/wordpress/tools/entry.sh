@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -exuo pipefail
+set -euo pipefail
 
 # SELECT ID,user_login,meta_key,meta_value FROM wp_users AS wpu INNER JOIN wp_usermeta AS wpm ON wpm.user_id=wpu.ID WHERE wpm.meta_key='wp_capabilities' GROUP BY wpm.meta_value;
 
@@ -16,10 +16,10 @@ if [ "$1" = "php-fpm7.3" ]; then
         echo "Can't connect to database"
     fi
 
-    if [ ! -f "/var/www/html/wp-config.php" ]; then
-        # Config php
-        sed -i '/listen = \/run\/php\/php7.3-fpm.sock/c listen = 9000' /etc/php/7.3/fpm/pool.d/www.conf
+    # Config php
+    sed -i '/listen = \/run\/php\/php7.3-fpm.sock/c listen = 9000' /etc/php/7.3/fpm/pool.d/www.conf
 
+    if [ ! -f "/var/www/html/wp-config.php" ]; then
         # Install wordpress
         tar -xzf wordpress-6.0.tar.gz
         rm wordpress-6.0.tar.gz
