@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mariadb:
-    container_name: ${MYSQL_SERVER}
+    container_name: mariadb
     build: ./requirements/mariadb
     hostname: ${MYSQL_SERVER}
     restart: always
