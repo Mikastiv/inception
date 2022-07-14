@@ -18,7 +18,7 @@ if [ "$1" = 'mysqld' ]; then
     if [ ! -f "$MYSQL_DATADIR/initdb.sql" ]; then
         chown -R mysql:mysql $MYSQL_DATADIR
 
-        mysql_install_db --datadir=$MYSQL_DATADIR --user=mysql --skip-test-db > /dev/null
+        mysql_install_db --datadir=$MYSQL_DATADIR --user=mysql --rpm --skip-test-db > /dev/null
 
         # Create SQL script
         cat >"$MYSQL_DATADIR/initdb.sql" <<EOF
@@ -32,7 +32,7 @@ FLUSH PRIVILEGES;
 EOF
 
         # Setup database
-        mysqld &
+        mysqld --skip-networking=1 &
         for i in {0..30}; do
             if mariadb -u root -proot --database=mysql <<<'SELECT 1;' &> /dev/null; then
                 break
