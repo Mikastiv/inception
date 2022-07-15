@@ -3,15 +3,6 @@
 set -euo pipefail
 
 if [ "$1" = 'mysqld' ]; then
-    if [ ! -d "/run/mysqld" ]; then
-        mkdir -p /run/mysqld
-        chown -R mysql:mysql /run/mysqld
-    fi
-
-    # Set the port
-    sed -Ei '/^(#)?port/c port                    = 3306' /etc/mysql/mariadb.conf.d/50-server.cnf
-    # Allow remote connections
-    sed -i '/^bind-address/c bind-address            = 0.0.0.0' /etc/mysql/mariadb.conf.d/50-server.cnf
     # Set the datadir
     sed -Ei "/^datadir/c datadir                 = $MYSQL_DATADIR" /etc/mysql/mariadb.conf.d/50-server.cnf
 

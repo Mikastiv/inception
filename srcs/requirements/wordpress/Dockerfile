@@ -10,6 +10,7 @@ RUN mkdir -p /var/www /run/php
 WORKDIR /var/www/
 
 COPY ./tools/* .
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 
 RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp
 
