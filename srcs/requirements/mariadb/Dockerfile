@@ -1,9 +1,10 @@
 FROM debian:buster
 
-RUN apt update && apt upgrade -y && apt install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     mariadb-server \
-    mariadb-client \
-    && rm -rf /var/lib/apt/lists/*
+    mariadb-client && \
+    apt-get clean autoclean && \
+    apt-get autoremove --yes
 
 WORKDIR /tmp
 

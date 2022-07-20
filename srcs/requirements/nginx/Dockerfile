@@ -1,9 +1,10 @@
 FROM debian:buster
 
-RUN apt update && apt upgrade -y && apt install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     nginx \
-    openssl \
-    && rm -rf /var/lib/apt/lists/*
+    openssl && \
+    apt-get clean autoclean && \
+    apt-get autoremove --yes
 
 WORKDIR /tmp
 
