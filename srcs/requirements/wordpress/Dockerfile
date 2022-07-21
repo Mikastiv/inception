@@ -1,6 +1,6 @@
 FROM debian:buster
 
-RUN apt-get update && apt-get upgrade -y && apt=get install -y php-fpm \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y php-fpm \
     php-mysql \
     mariadb-client && \
     apt-get clean autoclean && \
